@@ -1,0 +1,20 @@
+{
+  "Login": {
+    "emailInput": "#email",
+    "passwordInput": "#password",
+    "submitBtn": "button[type='submit']"
+  },
+  "Logout": {
+    "LogoutBtn": "a[class='nav-link nav-buttons']"
+  },
+
+  "Registration": {
+    "firstName": "#first-name",
+    "lastName": "#last-name",
+    "Email": "#email",
+    "Pass": "#password",
+    "PassConf": "#password-confirmation",
+    "Check": ":checkbox",
+    "terms": "button"
+  }
+}
