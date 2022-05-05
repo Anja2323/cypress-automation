@@ -1,4 +1,7 @@
 class CreateGallery {
+  get createGalleryHeading(){
+    return cy.get("h1");
+  }
   get title() {
     return cy.get("#title");
   }
@@ -6,34 +9,39 @@ class CreateGallery {
     return cy.get("#description");
   }
   get imageUpload() {
-    return cy.get(".input-group.mb-3 > .form-control");
+    return cy.get("input").eq(2);
   }
   get submit() {
-    return cy.get("/html//div[@id='app']//form/button[1]");
+    return cy.get(".btn").eq(0);
   }
   get cancel() {
-    return cy.get("/html//div[@id='app']//form/button[2]");
+    return cy.get(".btn").eq(1);
   }
   get add() {
-    return cy.get("/html//div[@id='app']//form/div[3]/button[@type='button']");
+    return cy.get("button[type='button']").last();
   }
   get up() {
-    return cy.get(".fas fa-chevron-circle-up");
+    return cy.get(".input-group-append").last();
   }
   get down() {
-    return cy.get(".fas fa-chevron-circle-down");
+    return cy.get(".input-group-append").first();
   }
   get delete() {
-    return cy.get(".fas fa-trash");
+    return cy.get(".input-group-append");
   }
+  get alert(){
+    return cy.get('p[class="alert alert-danger"]');
+  }
+  get imageTwo() {
+    return cy.get("input").last();
+  }
+
+  
   create(Title, Description, url) {
     this.title.type(Title);
     this.description.type(Description);
-    this.imageUpload.type.type(url);
-    this.add.click();
-    this.up.click();
-    this.down.click();
+    this.imageUpload.type(url);
     this.submit.click();
   }
 }
-export const crtgl = new CreateGallery();
+export const createGallery = new CreateGallery();

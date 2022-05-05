@@ -1,4 +1,7 @@
 class RegisterPage {
+  get registerHeading(){
+    return cy.get("h1");
+  }
   get firstName() {
     return cy.get("#first-name");
   }
@@ -19,6 +22,9 @@ class RegisterPage {
   }
   get button(){
       return cy.get("button");
+  }
+  get alertMsg(){
+    return cy.get('p[class="alert alert-danger"]');
   }
 
   register(firstname,lastname,email,passWord) {
