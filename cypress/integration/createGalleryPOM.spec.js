@@ -90,6 +90,19 @@ describe("Create Gallery page", () => {
     createGallery.submit.click();
     cy.url().should("include", "/create");
   });
+  it("url without extension", () => {
+    createGallery.title.type("kgd");
+    createGallery.description.type("bla");
+    createGallery.imageUpload.type("https://staticsensa.mondo.rs/Picture/34702/jpeg/cvet-simbol-ljubavi-vecnosti-novog-zivota-dom-kala_454755673");
+    createGallery.submit.click();
+    createGallery.alert
+      .should("have.text", "Wrong format of image")
+      .and("have.css", "background-color", "rgb(248, 215, 218)")
+      .and("have.css", "color", "rgb(114, 28, 36)");
+
+
+    cy.url().should("include", "/create");
+  });
   xit("image svg format", () => {
     createGallery.title.type("kdfg");
     createGallery.description.type("bla");
@@ -124,9 +137,7 @@ describe("Create Gallery page", () => {
     createGallery.add.click();
     createGallery.imageTwo.type('https://www.agroinfo.rs/uploads/Agroinfo/Hort.kultura/porcelanski-cvet.png');
     createGallery.delete.first().find('button').first().click();
-    cy.get(createGallery.imageUpload.type(
-        "https://staticsensa.mondo.rs/Picture/34702/jpeg/cvet-simbol-ljubavi-vecnosti-novog-zivota-dom-kala_454755673.jpg"
-      )).should('not.be.visible')
+    cy.get('.input').should('have.length', 0);
     createGallery.submit.click();
     cy.url().should("not.include", "/create");
  })
