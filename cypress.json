@@ -1,3 +1,8 @@
 {
-    "baseUrl":"https://gallery-app.vivifyideas.com"}
+    "baseUrl":"https://gallery-app.vivifyideas.com",
+    "env": {
+        "EXTERNAL_EMAIL": "jelenajelena861@yahoo.com",
+        "EXTERNAL_PASSWORD":"kakosimiti23"
+    }
+}
    

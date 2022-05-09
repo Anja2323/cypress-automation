@@ -1,7 +1,8 @@
 import { allgalleries } from "../page_objects/allGallery"; 
 describe ('All Galleries test', () => {
     beforeEach('visit All Galleries page',() =>{
-        cy.visit('/');
+        cy.loginViaBackend();
+        cy.visit('/')
     })
     it('validate page', () => {
         
@@ -26,7 +27,14 @@ describe ('All Galleries test', () => {
         allgalleries.singleGallery.should('have.length',40);
     })
     it('redirect to single gallery page',() =>{
+        cy.intercept({
+            method:'GET',
+            url:'https://gallery-api.vivifyideas.com/api/galleries/**'
+        }).as('redirectToGallery');
         allgalleries.singleGallery.first().find('a').first().click();
+        cy.wait('@redirectToGallery').then(interception =>{
+            expect(interception.response.statusCode).eq(200)
+        })
         cy.url().should('include', '/galleries');
 
     })
@@ -35,12 +43,15 @@ describe ('All Galleries test', () => {
         cy.url().should('include', '/authors');
     })
     it('search returning correct results',() =>{
+        
         allgalleries.singleGallery.should('have.length',10);
         allgalleries.search('Product Security Architect');
+        
+        
         allgalleries.singleGallery.should('have.length', 1);
         allgalleries.singleGallery
         .find('a')
         .first()
-        .should('have.text','Product Security Architect');
+        .should('contain.text','Product Security Architect');
     })
 })

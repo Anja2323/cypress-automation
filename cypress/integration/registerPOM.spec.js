@@ -8,12 +8,13 @@ describe("register POM", () => {
     password: faker.internet.password(20, true, /[A-Z]/, "888"),
   };
 
-  before("visit register page", () => {
+  beforeEach("visit register page", () => {
     cy.visit("/register");
     cy.url().should("include", "/register");
   });
 
   it("register with invalid data,wrong email", () => {
+
     rgPom.registerHeading.should("have.text", "Register");
     rgPom.firstName.type("Aleksandra");
     rgPom.lastName.type("Krstic");
@@ -45,12 +46,22 @@ describe("register POM", () => {
       .and("have.css", "color", "rgb(114, 28, 36)");
     cy.url().should("include", "/register");
   });
-  xit("register with valid data", () => {
+  it("register with valid data", () => {
+    cy.intercept({
+      method:'POST',
+      url: 'https://gallery-api.vivifyideas.com/api/auth/register'
+    }).as('successfulRegister');
+    
     rgPom.register(
       registerData.firstName,
       registerData.lastName,
       registerData.email,
       registerData.password
     );
+    cy.wait('@successfulRegister').then(interception =>{
+      console.log('RESPONSE', interception);
+      expect(interception.response.statusCode).eq(200);
+      
+    })
   });
 });
